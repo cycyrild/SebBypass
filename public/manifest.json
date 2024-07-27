@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "name": "SEB",
+    "version": "1.0",
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "windows",
+        "<all_urls>"
+    ],
+    "background": {
+        "page": "bg.html"
+    },
+    "browser_action": {}
+}
