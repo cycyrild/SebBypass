@@ -2,7 +2,6 @@
 
 ### Description
 The Chrome extension "SEB Bypass" allows you to bypass the execution of quizzes in Safe Exam Browser (SEB).
-This extension allows users to take a Moodle quiz directly in their current browser instead of having to go through SEB's secure environment.
 
 ### Installation
 
