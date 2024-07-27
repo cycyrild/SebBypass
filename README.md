@@ -2,6 +2,7 @@
 
 ### Description
 The Chrome extension "SEB Bypass" allows you to bypass the execution of quizzes in Safe Exam Browser (SEB).
+![Demo](./demo.gif)
 
 ### Installation
 
