@@ -1,7 +1,10 @@
 # SEB Bypass
 
 ### Description
-The Chrome extension "SEB Bypass" allows you to bypass the execution of quizzes in Safe Exam Browser (SEB).
+Chrome extension to bypass the execution of quizzes in Safe Exam Browser (SEB).
+
+The extension works by intercepting your browser requests and modifying HTTP headers.
+
 ![Demo](./demo.gif)
 
 ### Installation
@@ -44,11 +47,8 @@ You have **two options** to install the extension:
 
     ### Usage
 
-    To use the "SEB Bypass" Chrome extension, follow these steps:
+    To use the Chrome extension, follow these steps:
 
-    1. Click on the extension icon to open the SEB Bypass interface.
-    2. In the interface, locate the option to upload your SEB configuration file.
-    3. Click on the "Choose File" button and select your SEB configuration file from your computer.
-    4. Once the file is uploaded, the extension will bypass the execution of quizzes in Safe Exam Browser (SEB) and allow you to take the Moodle quiz directly in your current browser.
-
-    That's it! You can now enjoy taking quizzes without the need to go through SEB's secure environment.
+    1. Click on the extension icon to open the interface.
+    2. Click on the "Choose File" button and select your SEB configuration file from your computer.
+    3. Once the file is uploaded, the extension will bypass the execution of quizzes in SEB and allow you to take the quiz directly in your current browser.
