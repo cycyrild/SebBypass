@@ -7,6 +7,8 @@ The extension works by intercepting your browser requests and modifying HTTP hea
 
 ![Demo](./demo.gif)
 
+Discord: cyril13600
+
 ### Installation
 
 You have **two options** to install the extension:
