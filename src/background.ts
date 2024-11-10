@@ -1,10 +1,6 @@
-import { HeaderHandler } from './headerHandler';
+import { HeaderHandler } from './header-handler';
 import { DisableRequest, EnableRequest, GetStatusRequest, UpdateRqUrlsFilterRequest } from './messages';
 import { SebFile } from './seb-tools';
-
-
-
-
 
 const handler = new HeaderHandler();
 
@@ -25,6 +21,8 @@ chrome.runtime.onMessage.addListener(async (request: EnableRequest | DisableRequ
     } else if (request.action === 'updateRqUrlsFilter' && request.rqUrlsFilter) {
         handler.updateRqUrlsFilter(request.rqUrlsFilter);
         sendResponse(handler.getStatus());
+    } else {
+        sendResponse({ errorMsg: 'Unknown action' });
     }
 });
 

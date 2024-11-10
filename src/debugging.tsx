@@ -8,6 +8,7 @@ const App = () => {
 
   const [url, setUrl] = useState<string>('');
   const [hash, setHash] = useState<string>('');
+  const [configHash, setConfigHash] = useState<string>('');
   const [sebFile, setSebFile] = useState<SebFile | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,12 +19,15 @@ const App = () => {
         const text = e.target?.result;
         if (text && typeof text === 'string') {
           const sebFileInstance = await SebFile.createInstance(text);
-          if(!sebFileInstance) {
+
+          if (!sebFileInstance) {
             alert('Error parsing SEB file');
             return;
           }
+          setConfigHash(sebFileInstance.ConfigHash);
+
           setSebFile(sebFileInstance);
-          setUrl(sebFileInstance.startUrl ? sebFileInstance.startUrl : "");
+          setUrl(sebFileInstance.StartUrl ? sebFileInstance.StartUrl : "");
         }
       };
       reader.readAsText(file);
@@ -39,7 +43,7 @@ const App = () => {
 
   return (
     <div>
-       <Helmet>
+      <Helmet>
         <title>SEB file debugging</title>
       </Helmet>
       <h1>SEB file debugging</h1>
@@ -53,9 +57,18 @@ const App = () => {
       <textarea
         rows={10}
         cols={50}
-        value={sebFile?.serializedJson}
+        value={sebFile?.SerializedJson}
         readOnly
         placeholder="JSON output will appear here"
+      ></textarea>
+      <br />
+      <h3>Config Hash</h3>
+      <textarea
+        rows={1}
+        cols={50}
+        value={configHash}
+        readOnly
+        placeholder="Hash output will appear here"
       ></textarea>
       <br />
       <h2>Get Config Key</h2>
@@ -65,9 +78,11 @@ const App = () => {
         onChange={(e) => setUrl(e.target.value)}
         placeholder="Enter URL"
       />
-      <button onClick={handleUrlSubmit}>Get Hash</button>
       <br />
-      <h3>Config Hash</h3>
+
+      <button onClick={handleUrlSubmit}>Get Hash</button>
+
+      <h3>Config Key for {url}</h3>
       <textarea
         rows={1}
         cols={50}

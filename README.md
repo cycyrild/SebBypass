@@ -1,13 +1,19 @@
-# SEB Bypass
+# EZ SEB (Safe Exam Browser) Bypass
 
 ### Description
-Chrome extension to bypass the execution of quizzes in Safe Exam Browser (SEB).
+Easy browser extension to bypass the execution of quizzes in Safe Exam Browser (SEB).
 
 The extension works by intercepting your browser requests and modifying HTTP headers.
 
+### Compatibility
+
+This extension works on all Chromium-based browsers (e.g., Google Chrome, Microsoft Edge, Brave, Opera) and is compatible with all operating systems (Windows, macOS, Linux).
+
+> For any special requests contact me on **Discord** `cyril13600`
+
 ![Demo](./demo.gif)
 
-Discord: cyril13600
+
 
 ### Installation
 

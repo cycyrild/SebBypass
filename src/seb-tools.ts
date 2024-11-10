@@ -1,5 +1,5 @@
 import { DOMParser } from '@xmldom/xmldom';
-import * as CryptoJS from 'crypto-js';
+import CryptoES  from 'crypto-es';
 
 export interface XMLDictionary {
     [key: string]: XMLValue;
@@ -8,32 +8,16 @@ export interface XMLDictionary {
 export type XMLValue = string | number | boolean | XMLValue[] | XMLDictionary | undefined;
 
 export class SebFile {
-    private _dictionnary: XMLDictionary;
-    private _serializedJson: string;
-    private _startUrl: string | undefined;
-    private _configHash: string;
-
-    public get dictionnary(): XMLDictionary {
-        return this._dictionnary;
-    }
-
-    public get serializedJson() {
-        return this._serializedJson;
-    }
-
-    public get startUrl() {
-        return this._startUrl;
-    }
-
-    public get configHash() {
-        return this._configHash;
-    }
+    public readonly Dictionnary: XMLDictionary;
+    public readonly SerializedJson: string;
+    public readonly StartUrl: string | undefined;
+    public readonly ConfigHash: string;
 
     private constructor(dictionnary: XMLDictionary, serializedJson: string, startUrl: string | undefined, configKey: string) {
-        this._dictionnary = dictionnary;
-        this._serializedJson = serializedJson;
-        this._startUrl = startUrl;
-        this._configHash = configKey;
+        this.Dictionnary = dictionnary;
+        this.SerializedJson = serializedJson;
+        this.StartUrl = startUrl;
+        this.ConfigHash = configKey;
     }
 
     public static async createInstance(sebXML: string): Promise<SebFile|undefined> {
@@ -42,27 +26,26 @@ export class SebFile {
             return;
         }
         const serializedJson = serialize(dictionnary);
-        const startUrl = SebFile.getStartUrl(dictionnary);
-        const configHash = await SebFile.getConfigHash(serializedJson);
+        const startUrl = getStartUrl(dictionnary);
+        const configHash = getConfigHash(serializedJson);
         return new SebFile(dictionnary, serializedJson, startUrl, configHash);
     }
 
     public getConfigKey(url: string) {
-        return sha256(url + this._configHash);
-    }
-
-    private static getStartUrl(dictionnary: XMLDictionary): string | undefined {
-        const startUrl = dictionnary["startURL"];
-        if (typeof startUrl === "string") {
-            return startUrl;
-        }
-    }
-
-    private static getConfigHash(serializedJson: string): string {
-        return sha256(serializedJson);
+        return sha256(url + this.ConfigHash);
     }
 }
 
+function getConfigHash(serializedJson: string): string {
+    return sha256(serializedJson);
+}
+
+function getStartUrl(dictionnary: XMLDictionary): string | undefined {
+    const startUrl = dictionnary["startURL"];
+    if (typeof startUrl === "string") {
+        return startUrl;
+    }
+}
 
 function parseXMLString(htmlString: string): XMLDictionary|undefined {
     let currentKey: string | null = null;
@@ -207,5 +190,5 @@ function serialize(dictionary: XMLDictionary): string {
 }
 
 function sha256(str: string) {
-    return CryptoJS.SHA256(str).toString(CryptoJS.enc.Hex);
+    return CryptoES.SHA256(str).toString(CryptoES.enc.Hex);
 }
