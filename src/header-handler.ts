@@ -1,15 +1,15 @@
 import { MessageResponse } from "./messages";
 import { SebFile } from "./seb-tools";
 
-const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 SEB/3.1.1 (x64)";
-const CSP_HEADERS = ["content-security-policy", "x-frame-options"];
+const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 SEB/3.7.0 (x64)";
+// const CSP_HEADERS = ["content-security-policy", "x-frame-options"];
 const SEB_CKH_HTTP_HEADER_NAME = "X-SafeExamBrowser-ConfigKeyHash";
 
 export class HeaderHandler {
     private isEnabled: boolean;
     private sebFile?: SebFile;
     private onBeforeSendHeadersProcessing: (details: chrome.webRequest.WebRequestHeadersDetails) => chrome.webRequest.BlockingResponse | void;
-    private onHeadersReceivedProcessing: (details: chrome.webRequest.WebResponseHeadersDetails) => chrome.webRequest.BlockingResponse | void;
+    // private onHeadersReceivedProcessing: (details: chrome.webRequest.WebResponseHeadersDetails) => chrome.webRequest.BlockingResponse | void;
 
     private rqUrlsFilter: string[] | undefined;
 
@@ -17,13 +17,13 @@ export class HeaderHandler {
         this.isEnabled = false;
         this.sebFile = undefined;
         this.onBeforeSendHeadersProcessing = this.onBeforeSendHeaders.bind(this);
-        this.onHeadersReceivedProcessing = this.onHeadersReceived.bind(this);
+        // this.onHeadersReceivedProcessing = this.onHeadersReceived.bind(this);
     }
 
     public updateRqUrlsFilter(rqUrlsFilter: string[]): void {
         if (this.isEnabled) {
             chrome.webRequest.onBeforeSendHeaders.removeListener(this.onBeforeSendHeadersProcessing);
-            chrome.webRequest.onHeadersReceived.removeListener(this.onHeadersReceivedProcessing);
+            // chrome.webRequest.onHeadersReceived.removeListener(this.onHeadersReceivedProcessing);
 
             chrome.webRequest.onBeforeSendHeaders.addListener(
                 this.onBeforeSendHeadersProcessing,
@@ -31,11 +31,11 @@ export class HeaderHandler {
                 ["blocking", "requestHeaders"]
             );
 
-            chrome.webRequest.onHeadersReceived.addListener(
-                this.onHeadersReceivedProcessing,
-                { urls: rqUrlsFilter },
-                ["blocking", "responseHeaders"]
-            );
+            // chrome.webRequest.onHeadersReceived.addListener(
+            //     this.onHeadersReceivedProcessing,
+            //     { urls: rqUrlsFilter },
+            //     ["blocking", "responseHeaders"]
+            // );
 
             this.rqUrlsFilter = rqUrlsFilter;
         } else {
@@ -43,15 +43,15 @@ export class HeaderHandler {
         }
     }
 
-    private onHeadersReceived(details: chrome.webRequest.WebResponseHeadersDetails): chrome.webRequest.BlockingResponse | void {
-        // Remove CSP headers
-        details.responseHeaders = details.responseHeaders!.filter(header => {
-            const headerName = header.name.toLowerCase();
-            return !CSP_HEADERS.includes(headerName);
-        });
+    // private onHeadersReceived(details: chrome.webRequest.WebResponseHeadersDetails): chrome.webRequest.BlockingResponse | void {
+    //     // Remove CSP headers
+    //     details.responseHeaders = details.responseHeaders!.filter(header => {
+    //         const headerName = header.name.toLowerCase();
+    //         return !CSP_HEADERS.includes(headerName);
+    //     });
 
-        return { responseHeaders: details.responseHeaders };
-    }
+    //     return { responseHeaders: details.responseHeaders };
+    // }
 
     private onBeforeSendHeaders(details: chrome.webRequest.WebRequestHeadersDetails): chrome.webRequest.BlockingResponse | void {
         // Modify User-Agent header
@@ -90,11 +90,11 @@ export class HeaderHandler {
                 ["blocking", "requestHeaders"]
             );
 
-            chrome.webRequest.onHeadersReceived.addListener(
-                this.onHeadersReceivedProcessing,
-                { urls: rqUrlsFilter },
-                ["blocking", "responseHeaders"]
-            );
+            // chrome.webRequest.onHeadersReceived.addListener(
+            //     this.onHeadersReceivedProcessing,
+            //     { urls: rqUrlsFilter },
+            //     ["blocking", "responseHeaders"]
+            // );
 
             this.isEnabled = true;
             this.rqUrlsFilter = rqUrlsFilter;
@@ -107,7 +107,7 @@ export class HeaderHandler {
     public disable(): void {
         if (this.isEnabled) {
             chrome.webRequest.onBeforeSendHeaders.removeListener(this.onBeforeSendHeadersProcessing);
-            chrome.webRequest.onHeadersReceived.removeListener(this.onHeadersReceivedProcessing);
+            // chrome.webRequest.onHeadersReceived.removeListener(this.onHeadersReceivedProcessing);
 
             this.isEnabled = false;
             this.sebFile = undefined;
