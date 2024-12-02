@@ -61,6 +61,8 @@ function parseXMLString(htmlString: string): XMLDictionary|undefined {
             case 'string':
             case 'data':
                 return node.textContent?.trim() || '';
+            case 'real':
+                return parseFloat(node.textContent || '0');
             case 'array':
                 return handleArray(node);
             case 'dict':
