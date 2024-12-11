@@ -9,8 +9,6 @@ The extension works by intercepting your browser requests and modifying HTTP hea
 
 This extension works on all Chromium-based browsers (e.g., Google Chrome, Microsoft Edge, Brave, Opera) and is compatible with all operating systems (Windows, macOS, Linux).
 
-> For any special requests contact me on **Discord** `cyril13600`
-
 ![Demo](./demo.gif)
 
 
